@@ -3,7 +3,7 @@ export default function Home() {
     <main className="min-h-screen bg-black text-white flex items-center">
       <div className="max-w-5xl mx-auto px-6">
         <p className="text-blue-400 font-medium mb-4">
-          Senior QA Engineer
+          Senior QA Engineer 🚀
         </p>
 
         <h1 className="text-5xl md:text-7xl font-bold mb-6">
