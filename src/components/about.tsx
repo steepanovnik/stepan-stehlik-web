@@ -14,7 +14,7 @@ export default function About() {
 
                     <p>
                         Mám zkušenosti s návrhem testovacích scénářů,
-                        automatizací testů v Postmanu a Pythonu,
+                        automatizací testů v Postmanu a Playwright,
                         validací XML a JSON dat a integrací testů do CI/CD pipeline.
                     </p>
 
