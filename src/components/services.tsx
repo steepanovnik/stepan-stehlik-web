@@ -3,7 +3,7 @@ export default function Services() {
         {
             title: "Test Automation",
             description:
-                "Automatizace API a backend testů pomocí Postmanu, Newmanu a Pythonu.",
+                "Automatizace API a backend testů pomocí Postmanu, Newmanu.",
         },
         {
             title: "API Testing",
