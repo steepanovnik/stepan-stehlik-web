@@ -19,6 +19,20 @@
   }
 }
 
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-5px);
+  }
+
+  100% {
+    transform: translateY(0px);
+  }
+}
+
 body {
   background: var(--background);
   color: var(--foreground);
@@ -31,4 +45,20 @@ html {
 
 body {
   overflow-x: hidden;
+}
+
+.float-1 {
+  animation: float 6s ease-in-out infinite;
+}
+
+.float-2 {
+  animation: float 7s ease-in-out infinite;
+}
+
+.float-3 {
+  animation: float 8s ease-in-out infinite;
+}
+
+.float-4 {
+  animation: float 6.5s ease-in-out infinite;
 }
