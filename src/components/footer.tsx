@@ -1,7 +1,15 @@
+"use client";
+
+import { useLanguage } from "../providers/languageProvider";
+
 export default function Footer() {
+    const { t } = useLanguage();
+
     return (
-        <p className="text-center text-zinc-500 mt-16 text-sm">
-            © {new Date().getFullYear()} Štěpán Stehlík. Vytvořeno v Next.js a Tailwind CSS.
-        </p>
-    )
+        <footer className="mt-16 pb-8">
+            <p className="text-center text-sm text-zinc-500">
+                © {new Date().getFullYear()} {t.footer.copyright}
+            </p>
+        </footer>
+    );
 }

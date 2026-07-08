@@ -3,46 +3,82 @@
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
 
-const links = [
-    { label: "Služby", href: "#sluzby" },
-    { label: "O mně", href: "#o-mne" },
-    { label: "Technologie", href: "#technologie" },
-    { label: "Kontakt", href: "#kontakt" },
-];
+import ThemeMenu from "../ui/themeMenu";
+import ThemeSelector from "../ui/themeSelector";
+
+import LanguageMenu from "../ui/languageMenu";
+import LanguageSelector from "../ui/languegeSelector";
+
+import { useLanguage } from "../providers/languageProvider";
 
 export default function Navbar() {
+    const { t } = useLanguage();
+
     const [isOpen, setIsOpen] = useState(false);
 
     const closeMenu = () => setIsOpen(false);
 
+    const links = [
+        {
+            label: t.navbar.services,
+            href: "#sluzby",
+        },
+        {
+            label: t.navbar.about,
+            href: "#o-mne",
+        },
+        {
+            label: t.navbar.technologies,
+            href: "#technologie",
+        },
+        {
+            label: t.navbar.contact,
+            href: "#kontakt",
+        },
+    ];
+
     return (
         <>
-            <nav className="fixed top-0 left-0 w-full bg-black/80 backdrop-blur-md border-b border-zinc-800 z-50">
+            <nav className="fixed top-0 left-0 z-50 w-full border-b border-zinc-800 bg-black/80 backdrop-blur-md">
 
-                <div className="max-w-6xl mx-auto flex justify-between items-center px-6 py-4">
+                <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
 
                     <a
                         href="#hero"
-                        className="font-bold text-2xl tracking-tight hover:text-amber-400 transition"
                         onClick={closeMenu}
+                        className="text-2xl font-bold tracking-tight transition hover-accent"
                     >
                         Štěpán Stehlík
                     </a>
 
-                    <div className="hidden md:flex gap-8 text-gray-300">
+                    {/* Desktop */}
+                    <div className="hidden items-center gap-8 md:flex">
 
-                        {links.map((link) => (
-                            <a
-                                key={link.href}
-                                href={link.href}
-                                className="hover:text-white transition"
-                            >
-                                {link.label}
-                            </a>
-                        ))}
+                        <div className="flex gap-8 text-zinc-300">
+
+                            {links.map((link) => (
+                                <a
+                                    key={link.href}
+                                    href={link.href}
+                                    className="transition hover:text-white"
+                                >
+                                    {link.label}
+                                </a>
+                            ))}
+
+                        </div>
+
+                        <div className="flex items-center gap-3">
+
+                            <LanguageMenu />
+
+                            <ThemeMenu />
+
+                        </div>
 
                     </div>
 
+                    {/* Mobile */}
                     <button
                         onClick={() => setIsOpen(true)}
                         className="md:hidden"
@@ -59,24 +95,29 @@ export default function Navbar() {
             <div
                 onClick={closeMenu}
                 className={`
-                    fixed inset-0 bg-black/60 backdrop-blur-sm z-40
+                    fixed inset-0 z-40 bg-black/60 backdrop-blur-sm
                     transition-opacity duration-300
-                    ${isOpen ? "opacity-100 visible" : "opacity-0 invisible"}
+                    ${isOpen ? "visible opacity-100" : "invisible opacity-0"}
                 `}
             />
 
             {/* Drawer */}
             <aside
                 className={`
-                    fixed top-0 right-0 h-screen w-72
-                    bg-zinc-950 border-l border-zinc-800
-                    z-50
+                    fixed right-0 top-0 z-50 h-screen w-72
+                    overflow-y-auto
+
+                    border-l border-zinc-800
+                    bg-zinc-950
+
                     transition-transform duration-300 ease-in-out
+
                     ${isOpen ? "translate-x-0" : "translate-x-full"}
                 `}
             >
 
-                <div className="flex justify-end p-6">
+                {/* Close */}
+                <div className="flex justify-end px-6 pt-6 pb-2">
 
                     <button
                         onClick={closeMenu}
@@ -87,7 +128,8 @@ export default function Navbar() {
 
                 </div>
 
-                <div className="flex flex-col px-8 pt-10 gap-8 text-2xl">
+                {/* Navigation */}
+                <div className="flex flex-col gap-8 px-8 py-8 text-2xl">
 
                     {links.map((link) => (
 
@@ -95,7 +137,7 @@ export default function Navbar() {
                             key={link.href}
                             href={link.href}
                             onClick={closeMenu}
-                            className="hover:text-amber-400 transition"
+                            className="transition hover-accent"
                         >
                             {link.label}
                         </a>
@@ -104,7 +146,39 @@ export default function Navbar() {
 
                 </div>
 
+                {/* Settings */}
+                <div className="mx-6 mt-2 border-t border-zinc-800 pt-6 pb-8">
+
+                    {/* Language */}
+                    <div className="mb-8">
+
+                        <h3 className="mb-4 text-xs font-semibold uppercase tracking-widest text-zinc-500">
+                            {t.navbar.language}
+                        </h3>
+
+                        <LanguageSelector
+                            onSelect={closeMenu}
+                        />
+
+                    </div>
+
+                    {/* Theme */}
+                    <div>
+
+                        <h3 className="mb-4 text-xs font-semibold uppercase tracking-widest text-zinc-500">
+                            {t.navbar.theme}
+                        </h3>
+
+                        <ThemeSelector
+                            onSelect={closeMenu}
+                        />
+
+                    </div>
+
+                </div>
+
             </aside>
+
         </>
     );
 }

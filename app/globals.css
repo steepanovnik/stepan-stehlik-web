@@ -3,11 +3,17 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+
+  --accent: 245 158 11;
+  --accent-light: 251 191 36;
+  --accent-glow: 245 158 11;
+  --accent-text: #000000;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
@@ -21,7 +27,7 @@
 
 @keyframes float {
   0% {
-    transform: translateY(0px);
+    transform: translateY(0);
   }
 
   50% {
@@ -29,14 +35,8 @@
   }
 
   100% {
-    transform: translateY(0px);
+    transform: translateY(0);
   }
-}
-
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
 }
 
 html {
@@ -44,8 +44,112 @@ html {
 }
 
 body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-geist-sans);
   overflow-x: hidden;
 }
+
+/* ==========================================================
+   Accent Design System
+========================================================== */
+
+.bg-accent {
+  background: rgb(var(--accent));
+  color: var(--accent-text);
+}
+
+.bg-accent-soft {
+  background: rgb(var(--accent) / .10);
+}
+
+.bg-accent-soft-hover:hover {
+  background: rgb(var(--accent) / .08);
+}
+
+.text-accent {
+  color: rgb(var(--accent));
+}
+
+.text-accent-light {
+  color: rgb(var(--accent-light));
+}
+
+.border-accent {
+  border-color: rgb(var(--accent));
+}
+
+.border-accent-soft {
+  border-color: rgb(var(--accent) / .25);
+}
+
+.border-accent-strong {
+  border-color: rgb(var(--accent) / .55);
+}
+
+.hover-border-accent:hover {
+  border-color: rgb(var(--accent));
+}
+
+.shadow-accent {
+  box-shadow: 0 0 24px rgb(var(--accent-glow) / .25);
+}
+
+.shadow-accent-soft {
+  box-shadow: 0 0 22px rgb(var(--accent-glow) / .18);
+}
+
+.hover-shadow-accent:hover {
+  box-shadow: 0 0 22px rgb(var(--accent-glow) / .18);
+}
+
+
+
+.hover-accent:hover {
+  color: rgb(var(--accent));
+}
+
+.hover-bg-accent:hover {
+  background: rgb(var(--accent));
+  color: var(--accent-text);
+}
+
+.focus-accent:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgb(var(--accent) / .25);
+}
+
+/* ==========================================================
+   Global transitions
+========================================================== */
+
+body,
+button,
+a,
+input,
+textarea,
+select,
+div {
+  transition:
+    background-color .35s ease,
+    border-color .35s ease,
+    color .35s ease,
+    box-shadow .35s ease,
+    transform .35s ease;
+}
+
+/* ==========================================================
+   Selection
+========================================================== */
+
+::selection {
+  background: rgb(var(--accent));
+  color: white;
+}
+
+/* ==========================================================
+   Floating animation
+========================================================== */
 
 .float-1 {
   animation: float 6s ease-in-out infinite;

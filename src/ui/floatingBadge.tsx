@@ -32,52 +32,79 @@ export default function FloatingBadge({
                 ease: "easeInOut",
                 delay,
             }}
-            className={`
-                rounded-full
-                cursor-default
-                select-none
-                transition-all
-                duration-300
-
-                ${featured
-                    ? `
-                            border border-amber-400/60
-                            bg-amber-500/10
-                            text-amber-300
-
-                            px-7
-                            py-3.5
-
-                            text-lg
-                            md:text-xl
-
-                            font-semibold
-
-                            shadow-lg
-                            shadow-amber-500/10
-                        `
-                    : `
-                            border border-zinc-700
-                            bg-zinc-950/50
-
-                            px-6
-                            py-3
-
-                            text-base
-                            md:text-lg
-
-                            font-medium
-
-                            hover:scale-105
-                            hover:border-amber-400
-                            hover:bg-amber-500/10
-                            hover:shadow-lg
-                            hover:shadow-amber-500/20
-                        `
-                }
-            `}
         >
-            {children}
+            <div
+                className={`
+                    rounded-full
+                    cursor-default
+                    select-none
+                    transition-all
+                    duration-300
+
+                    ${featured
+                        ? `
+                                border
+
+                                px-7
+                                py-3.5
+
+                                text-lg
+                                md:text-xl
+
+                                font-semibold
+                              `
+                        : `
+                                border
+                                border-zinc-700
+                                bg-zinc-950/50
+
+                                px-6
+                                py-3
+
+                                text-base
+                                md:text-lg
+
+                                font-medium
+
+                                hover:scale-105
+                              `
+                    }
+                `}
+                style={
+                    featured
+                        ? {
+                            borderColor: "rgb(var(--accent) / .60)",
+                            background: "rgb(var(--accent) / .12)",
+                            color: "rgb(var(--accent-light))",
+                            boxShadow:
+                                "0 0 24px rgb(var(--accent-glow) / .20)",
+                        }
+                        : undefined
+                }
+                onMouseEnter={(e) => {
+                    if (featured) return;
+
+                    e.currentTarget.style.borderColor =
+                        "rgb(var(--accent))";
+
+                    e.currentTarget.style.background =
+                        "rgb(var(--accent) / .08)";
+
+                    e.currentTarget.style.boxShadow =
+                        "0 0 20px rgb(var(--accent-glow) / .18)";
+                }}
+                onMouseLeave={(e) => {
+                    if (featured) return;
+
+                    e.currentTarget.style.borderColor = "";
+
+                    e.currentTarget.style.background = "";
+
+                    e.currentTarget.style.boxShadow = "";
+                }}
+            >
+                {children}
+            </div>
         </motion.div>
     );
 }

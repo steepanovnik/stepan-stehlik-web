@@ -1,22 +1,26 @@
+"use client";
+
 import { Mail, ArrowRight } from "lucide-react";
 import { FaLinkedinIn, FaGithub } from "react-icons/fa6";
 
+import { useLanguage } from "../providers/languageProvider";
+
 export default function Contact() {
+    const { t } = useLanguage();
+
     return (
         <section
             id="kontakt"
-            className="bg-black text-white py-24 px-6"
+            className="bg-black py-24 px-6 text-white"
         >
             <div className="max-w-6xl mx-auto">
 
-                <h2 className="text-4xl font-bold text-center mb-4">
-                    Pojďme si promluvit o vašem projektu
+                <h2 className="mb-4 text-center text-4xl font-bold">
+                    {t.contact.title}
                 </h2>
 
-                <p className="text-zinc-400 text-center max-w-2xl mx-auto mb-16">
-                    Potřebujete automatizovat testy, otestovat API,
-                    manuální FE testování nebo vytvořit moderní web
-                    pro živnostníky poskytující služby?
+                <p className="mx-auto mb-16 max-w-2xl text-center text-zinc-400">
+                    {t.contact.description}
                 </p>
 
                 <div className="grid gap-8 md:grid-cols-3">
@@ -24,20 +28,39 @@ export default function Contact() {
                     {/* EMAIL */}
                     <a
                         href="mailto:info@stepan-stehlik.cz"
-                        className="group rounded-3xl border border-zinc-800 bg-zinc-950 p-10 transition-all duration-300 hover:bg-zinc-900 hover:border-zinc-700 hover:scale-[1.02]"
-                    >
-                        <Mail className="w-12 h-12 text-white mb-8" />
+                        className="
+                            group
 
-                        <h3 className="text-3xl font-bold mb-3">
-                            E-mail
+                            rounded-3xl
+
+                            border
+                            border-zinc-800
+
+                            bg-zinc-950
+
+                            p-10
+
+                            transition-all
+                            duration-300
+
+                            hover:scale-[1.02]
+                            hover:bg-zinc-900
+                            hover:border-accent
+                            hover:shadow-accent
+                        "
+                    >
+                        <Mail className="mb-8 h-12 w-12 text-white" />
+
+                        <h3 className="mb-3 text-3xl font-bold">
+                            {t.contact.email.title}
                         </h3>
 
-                        <p className="text-zinc-400 mb-10">
+                        <p className="mb-10 text-zinc-400">
                             info@stepan-stehlik.cz
                         </p>
 
-                        <div className="inline-flex items-center gap-2 text-amber-400 font-semibold group-hover:gap-3 transition-all">
-                            Napsat e-mail
+                        <div className="inline-flex items-center gap-2 font-semibold text-accent transition-all group-hover:gap-3">
+                            {t.contact.email.action}
                             <ArrowRight size={20} />
                         </div>
                     </a>
@@ -47,20 +70,39 @@ export default function Contact() {
                         href="https://www.linkedin.com/in/štěpán-stehlík-473383260/"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="group rounded-3xl border border-zinc-800 bg-zinc-950 p-10 transition-all duration-300 hover:bg-zinc-900 hover:border-zinc-700 hover:scale-[1.02]"
-                    >
-                        <FaLinkedinIn className="w-12 h-12 text-white mb-8" />
+                        className="
+                            group
 
-                        <h3 className="text-3xl font-bold mb-3">
-                            LinkedIn
+                            rounded-3xl
+
+                            border
+                            border-zinc-800
+
+                            bg-zinc-950
+
+                            p-10
+
+                            transition-all
+                            duration-300
+
+                            hover:scale-[1.02]
+                            hover:bg-zinc-900
+                            hover:border-accent
+                            hover:shadow-accent
+                        "
+                    >
+                        <FaLinkedinIn className="mb-8 h-12 w-12 text-white" />
+
+                        <h3 className="mb-3 text-3xl font-bold">
+                            {t.contact.linkedin.title}
                         </h3>
 
-                        <p className="text-zinc-400 mb-10">
-                            Spojme se profesně.
+                        <p className="mb-10 text-zinc-400">
+                            {t.contact.linkedin.description}
                         </p>
 
-                        <div className="inline-flex items-center gap-2 text-amber-400 font-semibold group-hover:gap-3 transition-all">
-                            Otevřít profil
+                        <div className="inline-flex items-center gap-2 font-semibold text-accent transition-all group-hover:gap-3">
+                            {t.contact.linkedin.action}
                             <ArrowRight size={20} />
                         </div>
                     </a>
@@ -70,20 +112,39 @@ export default function Contact() {
                         href="https://github.com/steepanovnik"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="group rounded-3xl border border-zinc-800 bg-zinc-950 p-10 transition-all duration-300 hover:bg-zinc-900 hover:border-zinc-700 hover:scale-[1.02]"
-                    >
-                        <FaGithub className="w-12 h-12 text-white mb-8" />
+                        className="
+                            group
 
-                        <h3 className="text-3xl font-bold mb-3">
-                            GitHub
+                            rounded-3xl
+
+                            border
+                            border-zinc-800
+
+                            bg-zinc-950
+
+                            p-10
+
+                            transition-all
+                            duration-300
+
+                            hover:scale-[1.02]
+                            hover:bg-zinc-900
+                            hover:border-accent
+                            hover:shadow-accent
+                        "
+                    >
+                        <FaGithub className="mb-8 h-12 w-12 text-white" />
+
+                        <h3 className="mb-3 text-3xl font-bold">
+                            {t.contact.github.title}
                         </h3>
 
-                        <p className="text-zinc-400 mb-10">
-                            Ukázky projektů a zdrojové kódy.
+                        <p className="mb-10 text-zinc-400">
+                            {t.contact.github.description}
                         </p>
 
-                        <div className="inline-flex items-center gap-2 text-amber-400 font-semibold group-hover:gap-3 transition-all">
-                            Zobrazit GitHub
+                        <div className="inline-flex items-center gap-2 font-semibold text-accent transition-all group-hover:gap-3">
+                            {t.contact.github.action}
                             <ArrowRight size={20} />
                         </div>
                     </a>

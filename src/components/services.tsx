@@ -1,45 +1,27 @@
+"use client";
+
 import FadeIn from "../ui/animations/fadeIn";
+import { useLanguage } from "../providers/languageProvider";
 
 export default function Services() {
-    const services = [
-        {
-            title: "Test Automation",
-            description:
-                "Automatizace API a backend testů pomocí Postmanu, Newmanu.",
-        },
-        {
-            title: "API Testing",
-            description:
-                "Návrh testovacích scénářů, validace dat a kontrola integrací.",
-        },
-        {
-            title: "CI/CD Integrace",
-            description:
-                "Zapojení automatických testů do GitHub Actions nebo GitLab CI/CD.",
-        },
-        {
-            title: "Moderní firemní weby",
-            description:
-                "Rychlé a moderní webové prezentace pro podnikatele nabízející služby.",
-        },
-    ];
+    const { t } = useLanguage();
 
     return (
         <section
             id="sluzby"
-            className="bg-zinc-900/25 text-white py-24 px-6"
+            className="bg-zinc-900/25 py-24 px-6 text-white"
         >
             <div className="max-w-6xl mx-auto">
 
                 <FadeIn>
-                    <h2 className="text-4xl font-bold text-center mb-12">
-                        Služby
+                    <h2 className="mb-12 text-center text-4xl font-bold">
+                        {t.services.title}
                     </h2>
                 </FadeIn>
 
-                <div className="grid md:grid-cols-2 gap-6">
+                <div className="grid gap-6 md:grid-cols-2">
 
-                    {services.map((service, index) => (
+                    {t.services.items.map((service, index) => (
                         <FadeIn
                             key={service.title}
                             delay={index * 0.15}
@@ -47,24 +29,33 @@ export default function Services() {
                             <div
                                 className="
                                     h-full
+
                                     rounded-xl
+
                                     border
                                     border-zinc-800
+
+                                    bg-zinc-950/20
+
                                     p-6
+
                                     transition-all
                                     duration-300
-                                    hover:border-zinc-700
-                                    hover:bg-zinc-900
+
                                     hover:-translate-y-1
+                                    hover:bg-zinc-900
+                                    hover:border-accent
+                                    hover:shadow-accent
                                 "
                             >
-                                <h3 className="text-2xl font-semibold mb-4">
+                                <h3 className="mb-4 text-2xl font-semibold">
                                     {service.title}
                                 </h3>
 
-                                <p className="text-zinc-400 leading-relaxed">
+                                <p className="leading-relaxed text-zinc-400">
                                     {service.description}
                                 </p>
+
                             </div>
                         </FadeIn>
                     ))}

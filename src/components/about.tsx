@@ -1,44 +1,52 @@
+"use client";
+
 import FadeIn from "../ui/animations/fadeIn";
+import { useLanguage } from "../providers/languageProvider";
 
 export default function About() {
+    const { t } = useLanguage();
+
     return (
-        <section id="o-mne" className="bg-black text-white py-24 px-6">
+        <section
+            id="o-mne"
+            className="bg-black py-24 px-6 text-white"
+        >
             <div className="max-w-4xl mx-auto">
+
                 <FadeIn>
-                    <h2 className="text-4xl font-bold mb-10 text-center">
-                        O mně
+                    <h2 className="mb-10 text-center text-4xl font-bold">
+                        {t.about.title}
                     </h2>
                 </FadeIn>
 
-                <div className="space-y-6 text-lg text-gray-300 leading-relaxed">
-                    <FadeIn delay={0.15}><p>
-                        Jsem Senior QA Engineer se zaměřením na backend testování,
-                        API automatizaci a kvalitu software.
-                    </p>
+                <div className="space-y-6 text-lg leading-relaxed text-zinc-300">
+
+                    <FadeIn delay={0.15}>
+                        <p>
+                            {t.about.paragraphs[0]}
+                        </p>
                     </FadeIn>
 
                     <FadeIn delay={0.3}>
                         <p>
-                            Mám zkušenosti s návrhem testovacích scénářů,
-                            automatizací testů v Postmanu,
-                            validací XML a JSON dat a integrací testů do CI/CD pipeline.
+                            {t.about.paragraphs[1]}
                         </p>
                     </FadeIn>
 
                     <FadeIn delay={0.45}>
                         <p>
-                            V posledních letech se věnuji především automatizaci,
-                            testování API rozhraní a nastavování procesů,
-                            které pomáhají týmům dodávat kvalitnější software rychleji.
-                        </p>
-
-
-                        <p>
-                            Vedle QA pomáhám podnikatelům vytvářet
-                            moderní firemní weby postavené na moderních technologiích.
+                            {t.about.paragraphs[2]}
                         </p>
                     </FadeIn>
+
+                    <FadeIn delay={0.6}>
+                        <p>
+                            {t.about.paragraphs[3]}
+                        </p>
+                    </FadeIn>
+
                 </div>
+
             </div>
         </section>
     );

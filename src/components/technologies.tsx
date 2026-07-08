@@ -1,8 +1,13 @@
+"use client";
+
 import FadeIn from "../ui/animations/fadeIn";
 import FloatingBadge from "../ui/floatingBadge";
 import { techCloud } from "../ui/data/techCloud";
+import { useLanguage } from "../providers/languageProvider";
 
 export default function Technologies() {
+    const { t } = useLanguage();
+
     return (
         <section
             id="technologie"
@@ -11,64 +16,67 @@ export default function Technologies() {
             <div className="max-w-6xl mx-auto">
 
                 <FadeIn>
-                    <h2 className="text-4xl font-bold text-center mb-5">
-                        Expertiza
+                    <h2 className="mb-5 text-center text-4xl font-bold">
+                        {t.technologies.title}
                     </h2>
                 </FadeIn>
 
                 <FadeIn delay={0.15}>
-                    <p className="text-center text-zinc-400 max-w-3xl mx-auto mb-20 leading-relaxed">
-                        Specializuji se na automatizaci API testů a tvorbu
-                        moderních prezentačních webů pro podnikatele a menší firmy.
+                    <p className="mx-auto mb-20 max-w-3xl text-center leading-relaxed text-zinc-400">
+                        {t.technologies.description}
                     </p>
                 </FadeIn>
 
-                <div className="relative max-w-5xl mx-auto group">
+                <div className="relative mx-auto max-w-5xl">
 
-                    {/* Amber glow */}
+                    {/* Accent glow */}
                     <div
                         className="
+                            pointer-events-none
+
                             absolute
                             left-1/2
                             top-1/2
+
+                            h-[420px]
+                            w-[420px]
+
                             -translate-x-1/2
                             -translate-y-1/2
 
-                            w-[420px]
-                            h-[420px]
-
-                            md:w-[550px]
-                            md:h-[550px]
-
                             rounded-full
-                            bg-amber-500/5
-                            blur-[170px]
 
-                            pointer-events-none
+                            blur-[170px]
                         "
+                        style={{
+                            background:
+                                "radial-gradient(circle, rgb(var(--accent-glow) / 0.10) 0%, transparent 70%)",
+                        }}
                     />
 
-                    {/* Blue glow */}
+                    {/* Outer glow */}
                     <div
                         className="
+                            pointer-events-none
+
                             absolute
                             left-1/2
                             top-1/2
+
+                            h-[620px]
+                            w-[620px]
+
                             -translate-x-1/2
                             -translate-y-1/2
 
-                            w-[550px]
-                            h-[550px]
-
-                            md:w-[700px]
-                            md:h-[700px]
-
                             rounded-full
-                            bg-sky-500/5
-                            blur-[220px]
 
-                            pointer-events-none
+                            blur-[220px]
                         "
+                        style={{
+                            background:
+                                "radial-gradient(circle, rgb(var(--accent-glow) / 0.05) 0%, transparent 75%)",
+                        }}
                     />
 
                     <div
@@ -78,8 +86,8 @@ export default function Technologies() {
 
                             flex
                             flex-wrap
-                            justify-center
                             items-center
+                            justify-center
 
                             gap-x-5
                             gap-y-8
