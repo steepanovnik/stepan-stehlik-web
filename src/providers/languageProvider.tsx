@@ -5,7 +5,7 @@ import {
     useContext,
     useEffect,
     useMemo,
-    useState,
+    useSyncExternalStore,
 } from "react";
 
 import {
@@ -13,6 +13,43 @@ import {
     Dictionary,
     Language,
 } from "@/i18n";
+
+const STORAGE_KEY = "language";
+
+const listeners = new Set<() => void>();
+
+function getLanguageSnapshot(): Language {
+    if (typeof window === "undefined") {
+        return "cs";
+    }
+
+    const savedLanguage =
+        window.localStorage.getItem(STORAGE_KEY);
+
+    return savedLanguage && savedLanguage in dictionaries
+        ? (savedLanguage as Language)
+        : "cs";
+}
+
+function getServerLanguageSnapshot(): Language {
+    return "cs";
+}
+
+function subscribeToLanguage(callback: () => void) {
+    listeners.add(callback);
+    window.addEventListener("storage", callback);
+
+    return () => {
+        listeners.delete(callback);
+        window.removeEventListener("storage", callback);
+    };
+}
+
+function setStoredLanguage(language: Language) {
+    window.localStorage.setItem(STORAGE_KEY, language);
+
+    listeners.forEach((listener) => listener());
+}
 
 type LanguageContextType = {
     language: Language;
@@ -28,27 +65,20 @@ export function LanguageProvider({
 }: {
     children: React.ReactNode;
 }) {
-    const [language, setLanguage] =
-        useState<Language>("cs");
+    const language = useSyncExternalStore(
+        subscribeToLanguage,
+        getLanguageSnapshot,
+        getServerLanguageSnapshot
+    );
 
     useEffect(() => {
-        const saved =
-            localStorage.getItem("language") as Language | null;
-
-        if (saved && saved in dictionaries) {
-            setLanguage(saved);
-        }
-    }, []);
-
-    useEffect(() => {
-        localStorage.setItem("language", language);
         document.documentElement.lang = language;
     }, [language]);
 
     const value = useMemo(
         () => ({
             language,
-            setLanguage,
+            setLanguage: setStoredLanguage,
             t: dictionaries[language],
         }),
         [language]

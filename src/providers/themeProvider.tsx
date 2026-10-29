@@ -4,7 +4,7 @@ import {
     createContext,
     useContext,
     useEffect,
-    useState,
+    useSyncExternalStore,
 } from "react";
 
 import {
@@ -12,6 +12,42 @@ import {
     Theme,
     ThemeId,
 } from "@/design-system/themes";
+
+const STORAGE_KEY = "theme";
+
+const listeners = new Set<() => void>();
+
+function getThemeSnapshot(): ThemeId {
+    if (typeof window === "undefined") {
+        return themes[0].id;
+    }
+
+    const savedTheme = window.localStorage.getItem(STORAGE_KEY);
+
+    return themes.some((theme) => theme.id === savedTheme)
+        ? (savedTheme as ThemeId)
+        : themes[0].id;
+}
+
+function getServerThemeSnapshot(): ThemeId {
+    return themes[0].id;
+}
+
+function subscribeToTheme(callback: () => void) {
+    listeners.add(callback);
+    window.addEventListener("storage", callback);
+
+    return () => {
+        listeners.delete(callback);
+        window.removeEventListener("storage", callback);
+    };
+}
+
+function setStoredTheme(themeId: ThemeId) {
+    window.localStorage.setItem(STORAGE_KEY, themeId);
+
+    listeners.forEach((listener) => listener());
+}
 
 type ThemeContextType = {
     theme: Theme;
@@ -25,22 +61,14 @@ export function ThemeProvider({
 }: {
     children: React.ReactNode;
 }) {
-    const [themeId, setThemeId] =
-        useState<ThemeId>("classic");
+    const themeId = useSyncExternalStore(
+        subscribeToTheme,
+        getThemeSnapshot,
+        getServerThemeSnapshot
+    );
 
     const theme =
-        themes.find((t) => t.id === themeId) ?? themes[0];
-
-    useEffect(() => {
-        const savedTheme = localStorage.getItem("theme");
-
-        if (
-            savedTheme &&
-            themes.some((t) => t.id === savedTheme)
-        ) {
-            setThemeId(savedTheme as ThemeId);
-        }
-    }, []);
+        themes.find((item) => item.id === themeId) ?? themes[0];
 
     useEffect(() => {
         document.documentElement.style.setProperty(
@@ -62,15 +90,13 @@ export function ThemeProvider({
             "--accent-text",
             theme.colors.textOnPrimary
         );
-
-        localStorage.setItem("theme", theme.id);
     }, [theme]);
 
     return (
         <ThemeContext.Provider
             value={{
                 theme,
-                setTheme: setThemeId,
+                setTheme: setStoredTheme,
             }}
         >
             {children}

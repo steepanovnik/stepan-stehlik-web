@@ -54,7 +54,7 @@ src/
 
 ## Přizpůsobení
 
-- **Motivy:** `src/design-system/themes.ts` – přidání dalšího barevného schématu.
+- **Motivy:** `src/design-system/themes.ts` – barvy a náhledy; názvy a popisy v `src/i18n/cs.ts` a `src/i18n/en.ts`. Nový motiv je potřeba přidat do `themeIds` i do obou slovníků.
 - **Jazyky:** `src/i18n/cs.ts` a `src/i18n/en.ts` – texty; nový jazyk se registruje v `src/i18n/index.ts` a `src/ui/languageSelector.tsx`.
 - **Obsah stránky:** jednotlivé sekce v `src/components/`.
 - **Kontaktní údaje:** odkazy na e-mail, LinkedIn a GitHub v `src/components/contact.tsx`.
