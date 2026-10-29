@@ -1,7 +1,7 @@
 "use client";
 
-import FadeIn from "../ui/animations/fadeIn";
-import { useLanguage } from "../providers/languageProvider";
+import FadeIn from "@/ui/animations/fadeIn";
+import { useLanguage } from "@/providers/languageProvider";
 
 export default function Services() {
     const { t } = useLanguage();

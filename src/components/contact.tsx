@@ -3,7 +3,7 @@
 import { Mail, ArrowRight } from "lucide-react";
 import { FaLinkedinIn, FaGithub } from "react-icons/fa6";
 
-import { useLanguage } from "../providers/languageProvider";
+import { useLanguage } from "@/providers/languageProvider";
 
 export default function Contact() {
     const { t } = useLanguage();

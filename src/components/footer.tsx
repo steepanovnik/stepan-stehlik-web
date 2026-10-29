@@ -1,6 +1,6 @@
 "use client";
 
-import { useLanguage } from "../providers/languageProvider";
+import { useLanguage } from "@/providers/languageProvider";
 
 export default function Footer() {
     const { t } = useLanguage();

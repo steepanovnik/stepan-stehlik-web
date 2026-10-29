@@ -1,5 +1,5 @@
-import cs from "./cs";
-import en from "./en";
+import cs from "@/i18n/cs";
+import en from "@/i18n/en";
 
 export const dictionaries = {
     cs,

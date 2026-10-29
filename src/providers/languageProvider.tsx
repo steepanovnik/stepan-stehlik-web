@@ -12,7 +12,7 @@ import {
     dictionaries,
     Dictionary,
     Language,
-} from "../i18n";
+} from "@/i18n";
 
 type LanguageContextType = {
     language: Language;
