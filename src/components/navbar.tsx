@@ -7,7 +7,7 @@ import ThemeMenu from "../ui/themeMenu";
 import ThemeSelector from "../ui/themeSelector";
 
 import LanguageMenu from "../ui/languageMenu";
-import LanguageSelector from "../ui/languegeSelector";
+import LanguageSelector from "../ui/languageSelector";
 
 import { useLanguage } from "../providers/languageProvider";
 
