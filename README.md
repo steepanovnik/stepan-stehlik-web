@@ -76,5 +76,6 @@ Každý push do produkční větve spustí produkční deploy. Větve a pull req
 ## Poznámky
 
 - Projekt neobsahuje databázi ani API routes – jde o staticky generovanou stránku.
+- Web je navržený výhradně pro tmavý režim; systémové nastavení světlého režimu vzhled nemění.
 - Fonty Geist se načítají přes `next/font` a při buildu se optimalizují.
 - Pro produkci je vhodné dokončit metadata (title, description, Open Graph) v `app/layout.tsx`.

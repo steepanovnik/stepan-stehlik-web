@@ -11,7 +11,7 @@ export default function Technologies() {
     return (
         <section
             id="technologie"
-            className="bg-zinc-900/25 py-24 px-6 text-white"
+            className="overflow-hidden bg-zinc-900/25 py-24 px-6 text-white"
         >
             <div className="max-w-6xl mx-auto">
 
