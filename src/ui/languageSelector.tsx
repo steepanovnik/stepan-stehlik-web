@@ -2,7 +2,7 @@
 
 import { Check } from "lucide-react";
 
-import { useLanguage } from "../providers/languageProvider";
+import { useLanguage } from "@/providers/languageProvider";
 
 type LanguageSelectorProps = {
     onSelect?: () => void;

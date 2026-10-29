@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { Palette } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
 
-import ThemeSelector from "./themeSelector";
+import ThemeSelector from "@/ui/themeSelector";
 
 export default function ThemeMenu() {
     const [open, setOpen] = useState(false);

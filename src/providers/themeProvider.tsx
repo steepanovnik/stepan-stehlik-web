@@ -7,7 +7,7 @@ import {
     useState,
 } from "react";
 
-import { themes, Theme } from "../design-system/themes";
+import { themes, Theme } from "@/design-system/themes";
 
 type ThemeContextType = {
     theme: Theme;

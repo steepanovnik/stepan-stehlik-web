@@ -1,9 +1,9 @@
 "use client";
 
-import FadeIn from "../ui/animations/fadeIn";
-import FloatingBadge from "../ui/floatingBadge";
-import { techCloud } from "../ui/data/techCloud";
-import { useLanguage } from "../providers/languageProvider";
+import FadeIn from "@/ui/animations/fadeIn";
+import FloatingBadge from "@/ui/floatingBadge";
+import { techCloud } from "@/ui/data/techCloud";
+import { useLanguage } from "@/providers/languageProvider";
 
 export default function Technologies() {
     const { t } = useLanguage();

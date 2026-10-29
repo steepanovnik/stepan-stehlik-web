@@ -3,13 +3,13 @@
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
 
-import ThemeMenu from "../ui/themeMenu";
-import ThemeSelector from "../ui/themeSelector";
+import ThemeMenu from "@/ui/themeMenu";
+import ThemeSelector from "@/ui/themeSelector";
 
-import LanguageMenu from "../ui/languageMenu";
-import LanguageSelector from "../ui/languageSelector";
+import LanguageMenu from "@/ui/languageMenu";
+import LanguageSelector from "@/ui/languageSelector";
 
-import { useLanguage } from "../providers/languageProvider";
+import { useLanguage } from "@/providers/languageProvider";
 
 export default function Navbar() {
     const { t } = useLanguage();

@@ -2,8 +2,8 @@
 
 import { Check } from "lucide-react";
 
-import { themes } from "../design-system/themes";
-import { useTheme } from "../providers/themeProvider";
+import { themes } from "@/design-system/themes";
+import { useTheme } from "@/providers/themeProvider";
 
 type ThemeSelectorProps = {
     onSelect?: () => void;

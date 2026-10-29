@@ -4,8 +4,8 @@ import { useEffect, useRef, useState } from "react";
 import { Languages } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
 
-import LanguageSelector from "./languageSelector";
-import { useLanguage } from "../providers/languageProvider";
+import LanguageSelector from "@/ui/languageSelector";
+import { useLanguage } from "@/providers/languageProvider";
 
 export default function LanguageMenu() {
     const { language, t } = useLanguage();

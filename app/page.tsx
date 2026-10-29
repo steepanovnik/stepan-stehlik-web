@@ -1,10 +1,10 @@
-import Navbar from "../src/components/navbar";
-import Hero from "../src/components/hero";
-import Services from "../src/components/services";
-import About from "../src/components/about";
-import Technologies from "../src/components/technologies";
-import Contact from "../src/components/contact";
-import Footer from "../src/components/footer";
+import Navbar from "@/components/navbar";
+import Hero from "@/components/hero";
+import Services from "@/components/services";
+import About from "@/components/about";
+import Technologies from "@/components/technologies";
+import Contact from "@/components/contact";
+import Footer from "@/components/footer";
 
 export default function Home() {
   return (
