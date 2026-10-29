@@ -38,6 +38,7 @@ export default function LanguageSelector({
                     <button
                         key={item.id}
                         type="button"
+                        aria-pressed={active}
                         onClick={() => {
                             setLanguage(item.id);
                             onSelect?.();
@@ -113,6 +114,7 @@ export default function LanguageSelector({
                             {active && (
                                 <Check
                                     size={18}
+                                    aria-hidden="true"
                                     className="text-accent"
                                 />
                             )}

@@ -7,11 +7,15 @@ import {
     useState,
 } from "react";
 
-import { themes, Theme } from "@/design-system/themes";
+import {
+    themes,
+    Theme,
+    ThemeId,
+} from "@/design-system/themes";
 
 type ThemeContextType = {
     theme: Theme;
-    setTheme: (id: string) => void;
+    setTheme: (id: ThemeId) => void;
 };
 
 const ThemeContext = createContext<ThemeContextType | null>(null);
@@ -21,7 +25,8 @@ export function ThemeProvider({
 }: {
     children: React.ReactNode;
 }) {
-    const [themeId, setThemeId] = useState("classic");
+    const [themeId, setThemeId] =
+        useState<ThemeId>("classic");
 
     const theme =
         themes.find((t) => t.id === themeId) ?? themes[0];
@@ -33,7 +38,7 @@ export function ThemeProvider({
             savedTheme &&
             themes.some((t) => t.id === savedTheme)
         ) {
-            setThemeId(savedTheme);
+            setThemeId(savedTheme as ThemeId);
         }
     }, []);
 

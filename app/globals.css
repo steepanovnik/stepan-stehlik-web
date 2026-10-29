@@ -166,3 +166,33 @@ div {
 .float-4 {
   animation: float 6.5s ease-in-out infinite;
 }
+
+/* ==========================================================
+   Accessibility
+========================================================== */
+
+:where(a, button, input, textarea, select):focus-visible {
+  outline: 2px solid rgb(var(--accent));
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .float-1,
+  .float-2,
+  .float-3,
+  .float-4 {
+    animation: none;
+  }
+
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}

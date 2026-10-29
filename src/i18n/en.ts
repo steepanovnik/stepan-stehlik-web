@@ -1,3 +1,5 @@
+import type { ThemeId } from "@/design-system/themes";
+
 const en = {
     navbar: {
         services: "Services",
@@ -6,7 +8,36 @@ const en = {
         contact: "Contact",
         theme: "Theme",
         language: "Language",
+        openMenu: "Open menu",
+        closeMenu: "Close menu",
+        mainNavigation: "Main navigation",
+        changeTheme: "Change theme",
+        themeMenuDescription: "Choose the website color scheme.",
+        changeLanguage: "Change language",
+        languageMenuDescription: "Choose the website language.",
     },
+
+    themes: {
+        classic: {
+            name: "Classic",
+            description: "Default website style",
+        },
+        ocean: {
+            name: "Ocean",
+            description: "Modern and technological look",
+        },
+        forest: {
+            name: "Forest",
+            description: "Calm and elegant style",
+        },
+        royal: {
+            name: "Royal",
+            description: "Bold and creative style",
+        },
+    } satisfies Record<
+        ThemeId,
+        { name: string; description: string }
+    >,
 
     hero: {
         badge: "Senior QA Engineer",

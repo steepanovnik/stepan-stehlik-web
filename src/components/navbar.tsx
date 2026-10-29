@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Menu, X } from "lucide-react";
 
 import ThemeMenu from "@/ui/themeMenu";
@@ -16,7 +16,78 @@ export default function Navbar() {
 
     const [isOpen, setIsOpen] = useState(false);
 
+    const openButtonRef = useRef<HTMLButtonElement>(null);
+    const closeButtonRef = useRef<HTMLButtonElement>(null);
+    const drawerRef = useRef<HTMLElement>(null);
+
     const closeMenu = () => setIsOpen(false);
+
+    const handleCloseMenu = () => {
+        setIsOpen(false);
+        openButtonRef.current?.focus();
+    };
+
+    useEffect(() => {
+        if (!isOpen) return;
+
+        closeButtonRef.current?.focus();
+
+        const handleKeyDown = (event: KeyboardEvent) => {
+            if (event.key === "Escape") {
+                setIsOpen(false);
+                openButtonRef.current?.focus();
+                return;
+            }
+
+            if (event.key !== "Tab" || !drawerRef.current) {
+                return;
+            }
+
+            const focusableElements =
+                drawerRef.current.querySelectorAll<HTMLElement>(
+                    'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])'
+                );
+
+            if (focusableElements.length === 0) {
+                return;
+            }
+
+            const firstElement = focusableElements[0];
+            const lastElement =
+                focusableElements[focusableElements.length - 1];
+
+            if (
+                event.shiftKey &&
+                document.activeElement === firstElement
+            ) {
+                event.preventDefault();
+                lastElement.focus();
+            } else if (
+                !event.shiftKey &&
+                document.activeElement === lastElement
+            ) {
+                event.preventDefault();
+                firstElement.focus();
+            }
+        };
+
+        document.addEventListener("keydown", handleKeyDown);
+
+        return () =>
+            document.removeEventListener("keydown", handleKeyDown);
+    }, [isOpen]);
+
+    useEffect(() => {
+        if (!isOpen) return;
+
+        const originalOverflow = document.body.style.overflow;
+
+        document.body.style.overflow = "hidden";
+
+        return () => {
+            document.body.style.overflow = originalOverflow;
+        };
+    }, [isOpen]);
 
     const links = [
         {
@@ -39,7 +110,10 @@ export default function Navbar() {
 
     return (
         <>
-            <nav className="fixed top-0 left-0 z-50 w-full border-b border-zinc-800 bg-black/80 backdrop-blur-md">
+            <nav
+                aria-label={t.navbar.mainNavigation}
+                className="fixed top-0 left-0 z-50 w-full border-b border-zinc-800 bg-black/80 backdrop-blur-md"
+            >
 
                 <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
 
@@ -80,11 +154,15 @@ export default function Navbar() {
 
                     {/* Mobile */}
                     <button
+                        ref={openButtonRef}
                         onClick={() => setIsOpen(true)}
                         className="md:hidden"
-                        aria-label="Otevřít menu"
+                        aria-label={t.navbar.openMenu}
+                        aria-expanded={isOpen}
+                        aria-controls="mobile-menu"
+                        aria-haspopup="dialog"
                     >
-                        <Menu size={28} />
+                        <Menu size={28} aria-hidden="true" />
                     </button>
 
                 </div>
@@ -93,7 +171,8 @@ export default function Navbar() {
 
             {/* Overlay */}
             <div
-                onClick={closeMenu}
+                aria-hidden="true"
+                onClick={handleCloseMenu}
                 className={`
                     fixed inset-0 z-40 bg-black/60 backdrop-blur-sm
                     transition-opacity duration-300
@@ -103,6 +182,12 @@ export default function Navbar() {
 
             {/* Drawer */}
             <aside
+                ref={drawerRef}
+                id="mobile-menu"
+                role="dialog"
+                aria-modal="true"
+                aria-label={t.navbar.mainNavigation}
+                inert={!isOpen}
                 className={`
                     fixed right-0 top-0 z-50 h-screen w-72
                     overflow-y-auto
@@ -120,10 +205,11 @@ export default function Navbar() {
                 <div className="flex justify-end px-6 pt-6 pb-2">
 
                     <button
-                        onClick={closeMenu}
-                        aria-label="Zavřít menu"
+                        ref={closeButtonRef}
+                        onClick={handleCloseMenu}
+                        aria-label={t.navbar.closeMenu}
                     >
-                        <X size={30} />
+                        <X size={30} aria-hidden="true" />
                     </button>
 
                 </div>
@@ -157,7 +243,7 @@ export default function Navbar() {
                         </h3>
 
                         <LanguageSelector
-                            onSelect={closeMenu}
+                            onSelect={handleCloseMenu}
                         />
 
                     </div>
@@ -170,7 +256,7 @@ export default function Navbar() {
                         </h3>
 
                         <ThemeSelector
-                            onSelect={closeMenu}
+                            onSelect={handleCloseMenu}
                         />
 
                     </div>

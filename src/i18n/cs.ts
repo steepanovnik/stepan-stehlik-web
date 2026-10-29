@@ -1,3 +1,5 @@
+import type { ThemeId } from "@/design-system/themes";
+
 const cs = {
     navbar: {
         services: "Služby",
@@ -6,7 +8,36 @@ const cs = {
         contact: "Kontakt",
         theme: "Motiv",
         language: "Jazyk",
+        openMenu: "Otevřít menu",
+        closeMenu: "Zavřít menu",
+        mainNavigation: "Hlavní navigace",
+        changeTheme: "Změnit motiv",
+        themeMenuDescription: "Vyberte si barevné schéma webu.",
+        changeLanguage: "Změnit jazyk",
+        languageMenuDescription: "Vyberte jazyk webu.",
     },
+
+    themes: {
+        classic: {
+            name: "Klasický",
+            description: "Výchozí styl webu",
+        },
+        ocean: {
+            name: "Oceán",
+            description: "Moderní a technologický vzhled",
+        },
+        forest: {
+            name: "Les",
+            description: "Klidný a elegantní styl",
+        },
+        royal: {
+            name: "Královský",
+            description: "Výrazný a kreativní styl",
+        },
+    } satisfies Record<
+        ThemeId,
+        { name: string; description: string }
+    >,
 
     hero: {
         badge: "Senior QA Engineer",

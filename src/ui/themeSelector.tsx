@@ -4,6 +4,7 @@ import { Check } from "lucide-react";
 
 import { themes } from "@/design-system/themes";
 import { useTheme } from "@/providers/themeProvider";
+import { useLanguage } from "@/providers/languageProvider";
 
 type ThemeSelectorProps = {
     onSelect?: () => void;
@@ -13,6 +14,7 @@ export default function ThemeSelector({
     onSelect,
 }: ThemeSelectorProps) {
     const { theme, setTheme } = useTheme();
+    const { t } = useLanguage();
 
     return (
         <div className="space-y-1.5">
@@ -20,11 +22,13 @@ export default function ThemeSelector({
             {themes.map((item) => {
 
                 const active = theme.id === item.id;
+                const copy = t.themes[item.id];
 
                 return (
                     <button
                         key={item.id}
                         type="button"
+                        aria-pressed={active}
                         onClick={() => {
                             setTheme(item.id);
                             onSelect?.();
@@ -113,11 +117,11 @@ export default function ThemeSelector({
                             <div>
 
                                 <div className="text-base font-medium text-white leading-none">
-                                    {item.name}
+                                    {copy.name}
                                 </div>
 
                                 <div className="mt-1 text-xs text-zinc-400 leading-snug">
-                                    {item.description}
+                                    {copy.description}
                                 </div>
 
                             </div>
@@ -129,6 +133,7 @@ export default function ThemeSelector({
                             {active && (
                                 <Check
                                     size={16}
+                                    aria-hidden="true"
                                     className="text-white"
                                 />
                             )}

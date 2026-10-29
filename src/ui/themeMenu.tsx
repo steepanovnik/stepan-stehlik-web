@@ -2,13 +2,18 @@
 
 import { useEffect, useRef, useState } from "react";
 import { Palette } from "lucide-react";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 
 import ThemeSelector from "@/ui/themeSelector";
+import { useLanguage } from "@/providers/languageProvider";
 
 export default function ThemeMenu() {
+    const { t } = useLanguage();
+    const shouldReduceMotion = useReducedMotion();
+
     const [open, setOpen] = useState(false);
 
+    const triggerRef = useRef<HTMLButtonElement>(null);
     const menuRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
@@ -30,15 +35,39 @@ export default function ThemeMenu() {
             );
     }, []);
 
+    useEffect(() => {
+        if (!open) return;
+
+        function handleKeyDown(event: KeyboardEvent) {
+            if (event.key === "Escape") {
+                setOpen(false);
+                triggerRef.current?.focus();
+            }
+        }
+
+        document.addEventListener("keydown", handleKeyDown);
+
+        return () =>
+            document.removeEventListener("keydown", handleKeyDown);
+    }, [open]);
+
+    const handleSelect = () => {
+        setOpen(false);
+        triggerRef.current?.focus();
+    };
+
     return (
         <div
             ref={menuRef}
             className="relative"
         >
             <button
+                ref={triggerRef}
                 type="button"
                 onClick={() => setOpen((prev) => !prev)}
-                aria-label="Změnit motiv"
+                aria-label={t.navbar.changeTheme}
+                aria-expanded={open}
+                aria-controls="theme-menu"
                 className="
                     flex
                     items-center
@@ -78,38 +107,53 @@ export default function ThemeMenu() {
                         color: "rgb(var(--accent))",
                     }}
                 >
-                    <Palette size={18} />
+                    <Palette size={18} aria-hidden="true" />
                 </motion.div>
 
                 <span className="hidden lg:block font-medium">
-                    Motiv
+                    {t.navbar.theme}
                 </span>
             </button>
 
             <AnimatePresence>
                 {open && (
                     <motion.div
-                        initial={{
-                            opacity: 0,
-                            y: -12,
-                            scale: 0.94,
-                        }}
+                        id="theme-menu"
+                        role="group"
+                        aria-labelledby="theme-menu-title"
+                        initial={
+                            shouldReduceMotion
+                                ? false
+                                : {
+                                    opacity: 0,
+                                    y: -12,
+                                    scale: 0.94,
+                                }
+                        }
                         animate={{
                             opacity: 1,
                             y: 0,
                             scale: 1,
                         }}
-                        exit={{
-                            opacity: 0,
-                            y: -8,
-                            scale: 0.98,
-                        }}
-                        transition={{
-                            type: "spring",
-                            stiffness: 420,
-                            damping: 30,
-                            mass: 0.7,
-                        }}
+                        exit={
+                            shouldReduceMotion
+                                ? { opacity: 0 }
+                                : {
+                                    opacity: 0,
+                                    y: -8,
+                                    scale: 0.98,
+                                }
+                        }
+                        transition={
+                            shouldReduceMotion
+                                ? { duration: 0 }
+                                : {
+                                    type: "spring",
+                                    stiffness: 420,
+                                    damping: 30,
+                                    mass: 0.7,
+                                }
+                        }
                         className="
                             absolute
                             right-0
@@ -134,20 +178,21 @@ export default function ThemeMenu() {
                     >
                         <div className="border-b border-zinc-800 px-5 py-4">
 
-                            <h3 className="font-semibold text-white">
-                                Motiv
+                            <h3
+                                id="theme-menu-title"
+                                className="font-semibold text-white"
+                            >
+                                {t.navbar.theme}
                             </h3>
 
                             <p className="mt-1 text-sm text-zinc-400">
-                                Vyberte si barevné schéma webu.
+                                {t.navbar.themeMenuDescription}
                             </p>
 
                         </div>
 
                         <div className="p-5">
-                            <ThemeSelector
-                                onSelect={() => setOpen(false)}
-                            />
+                            <ThemeSelector onSelect={handleSelect} />
                         </div>
 
                     </motion.div>

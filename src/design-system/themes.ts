@@ -1,7 +1,14 @@
+export const themeIds = [
+    "classic",
+    "ocean",
+    "forest",
+    "royal",
+] as const;
+
+export type ThemeId = (typeof themeIds)[number];
+
 export type Theme = {
-    id: string;
-    name: string;
-    description: string;
+    id: ThemeId;
 
     colors: {
         primary: string;
@@ -19,8 +26,6 @@ export type Theme = {
 export const themes: Theme[] = [
     {
         id: "classic",
-        name: "Classic",
-        description: "Výchozí styl webu",
 
         colors: {
             primary: "245 158 11",
@@ -37,8 +42,6 @@ export const themes: Theme[] = [
 
     {
         id: "ocean",
-        name: "Ocean",
-        description: "Moderní a technologický vzhled",
 
         colors: {
             primary: "59 130 246",
@@ -55,8 +58,6 @@ export const themes: Theme[] = [
 
     {
         id: "forest",
-        name: "Forest",
-        description: "Klidný a elegantní styl",
 
         colors: {
             primary: "16 185 129",
@@ -73,8 +74,6 @@ export const themes: Theme[] = [
 
     {
         id: "royal",
-        name: "Royal",
-        description: "Výrazný a kreativní styl",
 
         colors: {
             primary: "139 92 246",

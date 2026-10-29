@@ -1,36 +1,80 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Štěpán Stehlík – osobní web
 
-## Getting Started
+Osobní prezentační web zaměřený na QA automatizaci, API testování a tvorbu moderních firemních webů. Jednostránková aplikace s responzivním designem, přepínáním barevného motivu a jazyka (CZ/EN).
 
-First, run the development server:
+## Technologie
+
+| Technologie | Verze |
+|---|---|
+| Next.js (App Router) | 16.4.3 |
+| React | 19.2.4 |
+| TypeScript | 5 |
+| Tailwind CSS | 4 |
+| Framer Motion | 12 |
+| Lucide React / React Icons | – |
+
+## Požadavky
+
+- Node.js **20.9.0 nebo novější** (doporučeno 22 LTS)
+- npm
+
+## Lokální spuštění
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Web běží na [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Skripty
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Příkaz | Popis |
+|---|---|
+| `npm run dev` | Vývojový server s hot reloadem |
+| `npm run build` | Produkční build |
+| `npm run start` | Spuštění produkčního buildu |
+| `npm run lint` | ESLint kontrola |
 
-## Learn More
+## Struktura projektu
 
-To learn more about Next.js, take a look at the following resources:
+```
+app/
+  layout.tsx        # Root layout, fonty, providery
+  page.tsx          # Složení sekcí stránky
+  globals.css       # Tailwind a design systém
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+src/
+  components/       # Sekce stránky (hero, služby, o mně…)
+  providers/        # ThemeProvider a LanguageProvider
+  design-system/    # Definice barevných motivů
+  i18n/             # Český a anglický slovník
+  ui/               # Znovupoužitelné UI komponenty a animace
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Přizpůsobení
 
-## Deploy on Vercel
+- **Motivy:** `src/design-system/themes.ts` – přidání dalšího barevného schématu.
+- **Jazyky:** `src/i18n/cs.ts` a `src/i18n/en.ts` – texty; nový jazyk se registruje v `src/i18n/index.ts` a `src/ui/languageSelector.tsx`.
+- **Obsah stránky:** jednotlivé sekce v `src/components/`.
+- **Kontaktní údaje:** odkazy na e-mail, LinkedIn a GitHub v `src/components/contact.tsx`.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Volitelný motiv a jazyk se ukládají do `localStorage` prohlížeče.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Nasazení na Vercel
+
+Projekt je připraven k nasazení na [Vercel](https://vercel.com):
+
+1. Vytvoř nový projekt a propoj repository.
+2. Framework preset nech na **Next.js** – Vercel ho rozpozná automaticky.
+3. Build command ponech `npm run build`, output directory nech prázdné (Vercel použije výchozí `.next`).
+4. V **Settings → General → Node.js Version** nastav **22.x**.
+5. Projekt nevyžaduje žádné environment variables.
+
+Každý push do produkční větve spustí produkční deploy. Větve a pull requesty automaticky vytvářejí preview deploymenty. Vlastní doménu lze nastavit v **Settings → Domains**.
+
+## Poznámky
+
+- Projekt neobsahuje databázi ani API routes – jde o staticky generovanou stránku.
+- Fonty Geist se načítají přes `next/font` a při buildu se optimalizují.
+- Pro produkci je vhodné dokončit metadata (title, description, Open Graph) v `app/layout.tsx`.

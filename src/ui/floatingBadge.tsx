@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 
 type FloatingBadgeProps = {
     children: React.ReactNode;
@@ -13,12 +13,13 @@ export default function FloatingBadge({
     delay = 0,
     featured = false,
 }: FloatingBadgeProps) {
+    const shouldReduceMotion = useReducedMotion();
     const duration = 6 + (delay % 2);
 
     return (
         <motion.div
             animate={
-                featured
+                featured || shouldReduceMotion
                     ? {}
                     : {
                         y: [0, -5, 0, 4, 0],

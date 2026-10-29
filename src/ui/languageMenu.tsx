@@ -2,16 +2,22 @@
 
 import { useEffect, useRef, useState } from "react";
 import { Languages } from "lucide-react";
-import { AnimatePresence, motion } from "framer-motion";
+import {
+    AnimatePresence,
+    motion,
+    useReducedMotion,
+} from "framer-motion";
 
 import LanguageSelector from "@/ui/languageSelector";
 import { useLanguage } from "@/providers/languageProvider";
 
 export default function LanguageMenu() {
     const { language, t } = useLanguage();
+    const shouldReduceMotion = useReducedMotion();
 
     const [open, setOpen] = useState(false);
 
+    const triggerRef = useRef<HTMLButtonElement>(null);
     const menuRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
@@ -33,15 +39,39 @@ export default function LanguageMenu() {
             );
     }, []);
 
+    useEffect(() => {
+        if (!open) return;
+
+        function handleKeyDown(event: KeyboardEvent) {
+            if (event.key === "Escape") {
+                setOpen(false);
+                triggerRef.current?.focus();
+            }
+        }
+
+        document.addEventListener("keydown", handleKeyDown);
+
+        return () =>
+            document.removeEventListener("keydown", handleKeyDown);
+    }, [open]);
+
+    const handleSelect = () => {
+        setOpen(false);
+        triggerRef.current?.focus();
+    };
+
     return (
         <div
             ref={menuRef}
             className="relative"
         >
             <button
+                ref={triggerRef}
                 type="button"
                 onClick={() => setOpen((prev) => !prev)}
-                aria-label="Změnit jazyk"
+                aria-label={t.navbar.changeLanguage}
+                aria-expanded={open}
+                aria-controls="language-menu"
                 className="
                     flex
                     items-center
@@ -66,7 +96,7 @@ export default function LanguageMenu() {
                     focus:ring-white/20
                 "
             >
-                <Languages size={18} />
+                <Languages size={18} aria-hidden="true" />
 
                 <span className="hidden lg:block font-medium">
                     {language.toUpperCase()}
@@ -78,24 +108,37 @@ export default function LanguageMenu() {
                 {open && (
 
                     <motion.div
-                        initial={{
-                            opacity: 0,
-                            y: -10,
-                            scale: 0.96,
-                        }}
+                        id="language-menu"
+                        role="group"
+                        aria-labelledby="language-menu-title"
+                        initial={
+                            shouldReduceMotion
+                                ? false
+                                : {
+                                    opacity: 0,
+                                    y: -10,
+                                    scale: 0.96,
+                                }
+                        }
                         animate={{
                             opacity: 1,
                             y: 0,
                             scale: 1,
                         }}
-                        exit={{
-                            opacity: 0,
-                            y: -10,
-                            scale: 0.96,
-                        }}
-                        transition={{
-                            duration: 0.18,
-                        }}
+                        exit={
+                            shouldReduceMotion
+                                ? { opacity: 0 }
+                                : {
+                                    opacity: 0,
+                                    y: -10,
+                                    scale: 0.96,
+                                }
+                        }
+                        transition={
+                            shouldReduceMotion
+                                ? { duration: 0 }
+                                : { duration: 0.18 }
+                        }
                         className="
                             absolute
                             right-0
@@ -118,21 +161,22 @@ export default function LanguageMenu() {
                     >
                         <div className="border-b border-zinc-800 px-5 py-4">
 
-                            <h3 className="font-semibold">
+                            <h3
+                                id="language-menu-title"
+                                className="font-semibold"
+                            >
                                 {t.navbar.language}
                             </h3>
 
                             <p className="mt-1 text-sm text-zinc-400">
-                                Vyberte jazyk webu.
+                                {t.navbar.languageMenuDescription}
                             </p>
 
                         </div>
 
                         <div className="p-5">
 
-                            <LanguageSelector
-                                onSelect={() => setOpen(false)}
-                            />
+                            <LanguageSelector onSelect={handleSelect} />
 
                         </div>
 
